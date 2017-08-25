@@ -1,0 +1,32 @@
+{
+	"name": "voting-app",
+	"author": "http://github.com/anawebdev",
+	"version": "0.0.1",
+	"description": "Full stack JS Voting App",
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js"
+	},
+	"dependencies": {
+		"body-parser": "^1.16.0",
+		"cors": "^2.8.1",
+		"express": "^4.14.1",
+		"helmet": "^3.4.0",
+		"mongodb": "^2.2.22",
+		"nodemon": "^1.11.0",
+		"pug": "^2.0.0-rc.3"
+	},
+	"engines": {
+		"node": "4.4.3"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/anawebdev/voting-app"
+	},
+	"keywords": [
+		"node",
+		"hyperdev",
+		"express"
+	],
+	"license": "MIT"
+}
