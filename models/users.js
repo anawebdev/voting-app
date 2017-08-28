@@ -16,7 +16,19 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    name: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
     polls: [pollSchema]
 })
 
-const UserInfo = module.exports = mongoose.model('User', userSchema, 'users')
+const UserInfo = module.exports = mongoose.model('Users', userSchema, 'users')
