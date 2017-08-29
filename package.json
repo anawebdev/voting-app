@@ -8,6 +8,7 @@
 		"start": "node server.js"
 	},
 	"dependencies": {
+		"bcrypt": "^1.0.3",
 		"body-parser": "^1.16.0",
 		"cors": "^2.8.1",
 		"dotenv": "^4.0.0",
