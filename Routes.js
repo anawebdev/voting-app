@@ -18,7 +18,7 @@ module.exports = function (app, db) {
         } else if (user) {
           res.redirect('/')
         } else {
-          let hash = bcrypt.hashSync(req.body.password, 8)
+          const hash = bcrypt.hashSync(req.body.password, 8)
           mongoose.connection.collection('users').insert({username: req.body.username, 
                                                           password: hash,
                                                           email: req.body.email, 
