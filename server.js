@@ -7,7 +7,6 @@ const MongoClient   = require('mongodb').MongoClient
 const mongoose      = require('mongoose')
 const app           = express()
 const LocalStrategy = require('passport-local')
-const port          = process.env.PORT || 3000
 const bcrypt        = require('bcrypt')
 const routes        = require('./Routes.js')
 const auth          = require('./Auth.js')
@@ -47,7 +46,7 @@ mongoose.connect(process.env.MONGODB_URI,(err, db)=>{
   auth(app,db)
   routes(app, db)
 
-  app.listen(port, () => {
+  app.listen(process.env.PORT || 3000, () => {
     console.log("Listening on port " + port)
   });
 })
