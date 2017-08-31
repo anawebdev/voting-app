@@ -41,7 +41,6 @@ module.exports = function (app, db) {
   },
     (accessToken, refreshToken, profile, cb)=>{
       console.log(profile)
-      //database logic with callback containing our user object
       UserInfo.findAndModify(
         {id: profile.id},
         {},
