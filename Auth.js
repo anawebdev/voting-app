@@ -7,8 +7,7 @@ const mongo         = require('mongodb')
 const MongoClient   = require('mongodb').MongoClient
 const mongoose      = require('mongoose')
 const GitHubStrategy= require('passport-github').Strategy
-
-const UserInfo = require('./models/users.js')
+const UserInfo      = require('./models/users.js')
 
 module.exports = function (app, db) {
 
