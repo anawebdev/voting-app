@@ -8,8 +8,8 @@ const mongoose      = require('mongoose')
 const app           = express()
 const LocalStrategy = require('passport-local')
 const bcrypt        = require('bcrypt')
-const routes        = require('./Routes.js')
-const auth          = require('./Auth.js')
+const routes        = require('./routes.js')
+const auth          = require('./auth.js')
 
 require('dotenv').config()
 
