@@ -4,7 +4,6 @@ const bcrypt        = require('bcrypt')
 const mongo         = require('mongodb')
 const MongoClient   = require('mongodb').MongoClient
 const mongoose      = require('mongoose')
-const GitHubStrategy= require('passport-github').Strategy
 const UserInfo      = require('./models/users.js')
 
 module.exports = function (app, db) {
@@ -35,26 +34,11 @@ module.exports = function (app, db) {
   },
   passport.authenticate('local', { successRedirect: '/profile', failureRedirect: '/' })
   )
-/*
-  app.post('/login', passport.authenticate('local', { successRedirect: '/profile', 
-                                                    failureRedirect: '/login' }));
-*/
+
   app.route('/login')
     .post(passport.authenticate('local',{ successRedirect: '/profile', 
                                           failureRedirect: '/login' 
                                         })
-    );
-
-  app.route('/auth/github')
-    .get(passport.authenticate('github',{successRedirect:'/profile',
-                                          failureRedirect:'/login'})
-    );
-
-  app.route('/auth/github/callback')
-    .get(passport.authenticate('github', {failureRedirect:'/login'}),
-    (req,res)=>{
-      res.redirect('/profile')
-    }
     );
 
   function ensureAuthenticated(req,res,next){

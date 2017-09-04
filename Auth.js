@@ -6,7 +6,6 @@ const bcrypt        = require('bcrypt')
 const mongo         = require('mongodb')
 const MongoClient   = require('mongodb').MongoClient
 const mongoose      = require('mongoose')
-const GitHubStrategy= require('passport-github').Strategy
 const UserInfo      = require('./models/users.js')
 
 module.exports = function (app, db) {
@@ -33,35 +32,4 @@ module.exports = function (app, db) {
       })
     }
   ))
-
-  passport.use(new GitHubStrategy({
-    clientID: process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: 'https://awd-voting-app.herokuapp.com/auth/github/callback'
-  },
-    (accessToken, refreshToken, profile, cb)=>{
-      console.log(profile)
-      UserInfo.findAndModify(
-        {id: profile.id},
-        {},
-        {$setOnInsert:{
-          id: profile.id,
-          name: profileDisplayName||'John Doe',
-          photo: profile.photos[0].value || '',
-          email: profile.emails[0].value || 'No public email',
-          created_on: new Date(),
-          provider: profile.provider || ''
-        }, $set: {
-          last_login: new Date()
-        }, $inc: {
-          login_count: 1
-        }},
-        {upsert: true, new: true},
-        (err, doc)=>{
-          return cb(null, doc.value);
-        }
-      );
-    }
-  ))
-
 }
