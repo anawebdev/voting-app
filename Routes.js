@@ -37,23 +37,36 @@ module.exports = function (app, db) {
 
   app.route('/login')
     .post(passport.authenticate('local',{ successRedirect: '/profile', 
-                                          failureRedirect: '/login' 
+                                          failureRedirect: '/register' 
                                         })
     );
 
   function ensureAuthenticated(req,res,next){
     if(req.session.passport.user !== undefined) {
       return next();
+      //authenticated
     }
-    res.redirect('/login');
+    res.redirect('/register');
+    //unauthenticated
   }
 
   app.route('/profile')
-    .get(ensureAuthenticated,(req,res)=>{
+    .get(ensureAuthenticated,(req,res, next)=>{
       console.log('user: '+ req.user)
-      res.render(process.cwd()+'/views/pug/profile.pug', {username:req.user.name})
+      if(req.user.polls.length===0) {
+        res.render(process.cwd()+'/views/pug/profile.pug', {message:'Welcome, ' + req.user.name + '! Would you like to create a poll?'})
+      } else {
+        res.render(process.cwd()+'/views/pug/profile.pug', {message:'Welcome back, ' + req.user.name + '!'})}
   })
 
+  app.route('/home')
+   .get(ensureAuthenticated,(req,res, next)=>{
+      res.render(process.cwd()+'/views/pug/index.pug', {authenticated:true})
+  })
+
+  // if auth do stuff, if not auth redirect to register
+
+   
   app.route('/logout')
     .get((req,res)=>{
       req.logout()

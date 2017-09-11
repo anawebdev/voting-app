@@ -1,16 +1,50 @@
 html
   head
-    title FCC Advanced Node and Express
+    title Voting App
     meta(name='description', content='Profile')
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='/public/style.css')
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap-grid.css")
+  header
+    div(class="container-fluid")
+      div(class="row header")
+        div(class="col-md-2")
+          h4 Voting App
+        div(class="col-md-8")
+        div(class="col-md-2")
+          a(href='/logout')
+            p Logout
+          a(href='/home')
+              p Homepage
   body
-    h1.border.center FCC Advanced Node and Express
-    //add your code below, make sure its indented at this level
-    h2.center#welcome Welcome, #{username}!
-    a(href='/logout') Logout
+    
+    h4 #{message}
+    
+    div(class="container-fluid")
+      div(class="row")
+        div(class="col-md-4")  
+        div(class="col-md-4")
+          hr
+          h4 Create Poll
+          form(action='/createpoll', method='post')
+            div
+              label Question:
+              input(type='text', name='title')
+            div
+              label Option 1:
+              input(type='text', name='option1')
+            div
+              label Option 2:
+              input(type='text', name='option2')
+            div(id="add")
+
+            br
+            div
+              button(type='button', value='Add' class="btn-primary" id='addOption') Add Option
+              button(type='submit', value='Register' class="btn-primary") Create
+            hr
         
     script(src='https://code.jquery.com/jquery-2.2.1.min.js', integrity='sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=', crossorigin='anonymous')
     script(src='/public/client.js')

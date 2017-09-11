@@ -1,36 +1,61 @@
 html
   head
-    title FCC Advanced Node and Express
+    title Voting App
     meta(name='description', content='A cool thing made with HyperDev')
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='/public/style.css')
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap-grid.css")
+  header
+    div(class="container-fluid")
+      div(class="row header")
+        div(class="col-md-2")
+          h4 Voting App
+  
   body
-    h1.border.center FCC Advanced Node and Express
-    h2.center#pug-success-message
-    | Looks like this page is being rendered from Pug into HTML!
-    | #{title}
-    p#pug-variable= message
-    
-    if showRegistration
-      hr
-      p Registration Form
-      form(action='/register', method='post')
-        div
-          label Name:
-          input(type='text', name='name')
-        div
-          label Username:
-          input(type='text', name='username')
-        div
-          label Email:
-          input(type='text', name='email')
-        div
-          label Password:
-          input(type='password', name='password')
-        div
-          input(type='submit', value='Register')
+    div(class="container-fluid")
+      div(class="row")      
+          div(class="col-md-4")  
+          div(class="col-md-4")
+            if showLogin
+              br
+              h4 Login
+              form(action='/login', method='post')
+                div
+                  label Username:
+                  input(type='text', name='username')
+                div
+                  label Password:
+                  input(type='password', name='password')
+                br
+                div
+                  button(type='submit', value='Log In' class="btn-primary") Log In
+                  
+                  hr
+            h4 - or -
+            if showRegistration
+              hr
+              h4 Register
+              form(action='/register', method='post')
+                div
+                  label Name:
+                  input(type='text', name='name')
+                div
+                  label Username:
+                  input(type='text', name='username')
+                div
+                  label Email:
+                  input(type='text', name='email')
+                div
+                  label Password:
+                  input(type='password', name='password')
+                br
+                div
+                  button(type='submit', value='Register' class="btn-primary") Register
+
+      
+
       
         
     script(src='https://code.jquery.com/jquery-2.2.1.min.js', integrity='sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=', crossorigin='anonymous')

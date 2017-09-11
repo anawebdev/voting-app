@@ -19,10 +19,15 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.route('/')
   .get((req, res) => {
-    res.render(process.cwd() + '/views/pug/index.pug', {title: 'Hello', message:'Please login', showLogin: true, showRegistration: true})
+    res.render(process.cwd() + '/views/pug/index.pug')
   })
 
 app.set('view engine', 'pug')
+
+app.route('/register')
+  .get((req, res) => {
+    res.render(process.cwd() + '/views/pug/register.pug', {title: 'Hello', message:'Please login', showLogin: true, showRegistration: true})
+  })
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
