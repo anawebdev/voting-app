@@ -1,9 +1,24 @@
 $( document ).ready(function() {
 var option = 3; 
-  $('#addOption').on('click', function(){
-      console.log('option number' + option);
-      var add = "<div><label>Option " + option + ": <input type='text', name='option" + option +"'/></label></div><br>";
-      $('#add').innerHTML == add;
-      option++;
-  });
+var max_fields = 20;
+var wrapper = $(".input_wrap");
+var add_button = $(".add_button");
+$(add_button).click(function(e){
+  e.preventDefault();
+  var add = "<div><label>Option : <input type='text', name='option" + option +"'/></label><button class='remove_fields btn-danger'>X</button></div>";
+  if(option<max_fields){
+    option++;
+    $(wrapper).append(add);
+  }
+});
+
+$(wrapper).on("click",".remove_fields", function(e){
+  e.preventDefault();
+  $(this).parent('div').remove();
+})
+
+$('#clear').on('click', function(){
+  document.forms['create_poll'].reset();
+})
+
 });

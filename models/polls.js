@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 // Schema
 const optionSchema = mongoose.Schema({
-    title: {
+    option: {
         type: String
     },
     votes: {

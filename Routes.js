@@ -64,7 +64,36 @@ module.exports = function (app, db) {
       res.render(process.cwd()+'/views/pug/index.pug', {authenticated:true})
   })
 
-  // if auth do stuff, if not auth redirect to register
+  //create poll
+
+  app.route('/createpoll')
+    .post((req,res,next)=>{
+      console.log("REQ BODY: " + req.body);
+      let date = new Date();
+      let timestamp = date.getTime();
+      let poll = {timestamp: timestamp,
+                  creator: req.session.passport.user,
+                  title: req.body.title,
+                  options: []
+                }
+      let options_info = req.body;
+      delete options_info.title;
+      UserInfo.findOne({"_id":req.session.passport.user},(err,user)=>{
+        console.log("USER: " + user);
+        Object.keys(options_info).forEach((key)=>{
+          console.log("USER POLLS: " + user.polls);
+          user.polls.unshift({
+            "option": key,
+            "votes": 0
+          })
+        })
+      })
+     /* let option = {
+        option: option,
+        votes: 0
+      }*/
+      console.log("POLL: "+poll);
+    })
 
    
   app.route('/logout')

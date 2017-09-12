@@ -28,7 +28,7 @@ html
         div(class="col-md-4")
           hr
           h4 Create Poll
-          form(action='/createpoll', method='post')
+          form(action='/createpoll', method='post' id='create_poll' name='create_poll')
             div
               label Question:
               input(type='text', name='title')
@@ -38,13 +38,17 @@ html
             div
               label Option 2:
               input(type='text', name='option2')
-            div(id="add")
+            div(class="input_wrap")
 
-            br
             div
-              button(type='button', value='Add' class="btn-primary" id='addOption') Add Option
-              button(type='submit', value='Register' class="btn-primary") Create
+              button(type='submit', value='Register' class="btn-primary" id='submit') Create
+
+
+              button(type='button', value='Add' class="btn-primary add_button") Add Option
+              button(type='button', class="btn-danger" id='clear') Clear
             hr
+            h4 Your Recent Polls
+            
         
     script(src='https://code.jquery.com/jquery-2.2.1.min.js', integrity='sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=', crossorigin='anonymous')
     script(src='/public/client.js')
