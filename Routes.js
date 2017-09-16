@@ -68,31 +68,30 @@ module.exports = function (app, db) {
 
   app.route('/createpoll')
     .post((req,res,next)=>{
-      console.log("REQ BODY: " + req.body);
+      const formObj = req.body;
       let date = new Date();
       let timestamp = date.getTime();
-      let poll = {timestamp: timestamp,
-                  creator: req.session.passport.user,
-                  title: req.body.title,
-                  options: []
-                }
-      let options_info = req.body;
-      delete options_info.title;
       UserInfo.findOne({"_id":req.session.passport.user},(err,user)=>{
-        console.log("USER: " + user);
-        Object.keys(options_info).forEach((key)=>{
-          console.log("USER POLLS: " + user.polls);
-          user.polls.unshift({
-            "option": key,
-            "votes": 0
-          })
+        const createOptions = [];
+
+        // create options array
+        Object.keys(req.body).map((key,index)=>{
+          createOptions.unshift({'option' : req.body[key], 'votes': 0})
+        })
+
+        // create poll object
+        user.polls.unshift({
+          "timestamp": timestamp,
+          "creator": req.session.passport.user,
+          "title": req.body.title,
+          "options": createOptions
+        })
+
+        // save poll to db
+        user.save((err,user)=>{
+          if (err) throw err
         })
       })
-     /* let option = {
-        option: option,
-        votes: 0
-      }*/
-      console.log("POLL: "+poll);
     })
 
    

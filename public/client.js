@@ -5,7 +5,7 @@ var wrapper = $(".input_wrap");
 var add_button = $(".add_button");
 $(add_button).click(function(e){
   e.preventDefault();
-  var add = "<div><label>Option : <input type='text', name='option" + option +"'/></label><button class='remove_fields btn-danger'>X</button></div>";
+  var add = "<div><label>Option : <input type='text', name='option"+option+"'/></label><button class='remove_fields btn-danger'>X</button></div>";
   if(option<max_fields){
     option++;
     $(wrapper).append(add);

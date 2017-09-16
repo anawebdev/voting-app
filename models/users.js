@@ -1,13 +1,31 @@
 const mongoose = require('mongoose')
 
-// Polls Schema
-const pollSchema = mongoose.Schema({
-    title: {
+
+// Schema
+const optionSchema = mongoose.Schema({
+    option: {
         type: String
     },
-    date: {
-        type: String
+    votes: {
+        type: Number
     }
+})
+
+// Poll Schema
+const pollSchema = mongoose.Schema({
+    timestamp: {
+        type: String
+    },
+    creator: {
+        type: String,
+        required: true
+    },
+    title: {
+        type: String,
+        required: true
+    },
+    options: [optionSchema],
+
 })
 
 // User Schema

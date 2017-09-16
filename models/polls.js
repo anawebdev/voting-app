@@ -12,7 +12,7 @@ const optionSchema = mongoose.Schema({
 
 // Poll Schema
 const pollSchema = mongoose.Schema({
-    date: {
+    timestamp: {
         type: String
     },
     creator: {
