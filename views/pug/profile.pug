@@ -48,6 +48,15 @@ html
               button(type='button', class="btn-danger" id='clear') Clear
             hr
             h4 Your Recent Polls
+
+          ul
+            each poll in displayPolls
+              li
+                a(href='/poll/'+poll.id)
+                  p= poll.title
+
+
+
             
         
     script(src='https://code.jquery.com/jquery-2.2.1.min.js', integrity='sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=', crossorigin='anonymous')

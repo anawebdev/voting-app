@@ -17,8 +17,11 @@ $(wrapper).on("click",".remove_fields", function(e){
   $(this).parent('div').remove();
 })
 
-$('#clear').on('click', function(){
-  document.forms['create_poll'].reset();
+$('#submit').on('click', function(){
+  setTimeout(()=>{
+    document.forms['create_poll'].reset();
+  }, 500)
+  
 })
 
 });

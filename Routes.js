@@ -52,11 +52,28 @@ module.exports = function (app, db) {
 
   app.route('/profile')
     .get(ensureAuthenticated,(req,res, next)=>{
+      let displayPolls=[];
       console.log('user: '+ req.user)
       if(req.user.polls.length===0) {
         res.render(process.cwd()+'/views/pug/profile.pug', {message:'Welcome, ' + req.user.name + '! Would you like to create a poll?'})
       } else {
-        res.render(process.cwd()+'/views/pug/profile.pug', {message:'Welcome back, ' + req.user.name + '!'})}
+        //display polls
+        UserInfo.find({"_id": req.session.passport.user},(err,user)=>{
+          console.log('USER');
+          console.log(req.user.polls);
+          
+          req.user.polls.map((elem, index)=>{
+            let title = "title" + index;
+            let id = "id"+index;
+            displayPolls.push({title: elem.title, id: elem._id})
+            
+          })
+          console.log('POLLS');
+          console.log(displayPolls);
+          res.render(process.cwd()+'/views/pug/profile.pug', {message:'Welcome back, ' + req.user.name + '!', displayPolls:displayPolls})
+        })
+        
+      }
   })
 
   app.route('/home')
@@ -65,7 +82,6 @@ module.exports = function (app, db) {
   })
 
   //create poll
-
   app.route('/createpoll')
     .post((req,res,next)=>{
       const formObj = req.body;
@@ -90,10 +106,25 @@ module.exports = function (app, db) {
         // save poll to db
         user.save((err,user)=>{
           if (err) throw err
+          res.redirect('/profile');
         })
+
+        
+      })
+      
+    })
+/*
+  //display poll
+  app.route('/poll/:pollId')
+    .get((req,res)=>{
+      console.log(req.params.pollId);
+      var doc = users.polls.id(req.params.pollId);
+      UserInfo.findOne(doc,(err,user)=>{
+        if(err) throw err;
+        console.log(user);
       })
     })
-
+*/
    
   app.route('/logout')
     .get((req,res)=>{
