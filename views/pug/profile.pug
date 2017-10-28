@@ -42,18 +42,21 @@ html
 
             div
               button(type='submit', value='Register' class="btn-primary" id='submit') Create
-
+              
 
               button(type='button', value='Add' class="btn-primary add_button") Add Option
               button(type='button', class="btn-danger" id='clear') Clear
             hr
-            h4 Your Recent Polls
+            
 
-          ul
-            each poll in displayPolls
-              li
-                a(href='/poll/'+poll.id)
-                  p= poll.title
+
+          if display  
+            h4 Your Recent Polls
+            ul
+              each poll in displayPolls
+                li
+                  a(href='/poll/'+poll.poll_id)
+                    p= poll.title
 
 
 

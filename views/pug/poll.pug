@@ -1,0 +1,29 @@
+html
+  head
+    title Voting App
+    meta(name='description', content='Profile')
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='/public/style.css')
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap-grid.css")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js")
+  
+  header
+    div(class="container-fluid")
+      div(class="row header")
+        div(class="col-md-2")
+          h4 Voting App
+        div(class="col-md-8")
+        div(class="col-md-2")
+          a(href='/logout')
+            p Logout
+          a(href='/home')
+              p Homepage
+  body
+
+    h4 #{message}
+    canvas(id="myChart" width="200" height="200")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js" integrity="sha256-N4u5BjTLNwmGul6RgLoESPNqDFVUibVuOYhP4gJgrew=" crossorigin="anonymous")
+    script(src='https://code.jquery.com/jquery-2.2.1.min.js', integrity='sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=', crossorigin='anonymous')
+    script(src='/public/client.js')

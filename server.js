@@ -13,6 +13,8 @@ const auth          = require('./Auth.js')
 
 require('dotenv').config()
 
+mongoose.Promise = global.Promise;
+
 app.use('/public', express.static(process.cwd() + '/public'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -47,6 +49,8 @@ const PollInfo = require('./models/polls.js')
 mongoose.connect(process.env.MONGODB_URI,(err, db)=>{
   if(err) throw err
   console.log('Connected to MongoDB...')
+
+
 
   auth(app,db)
   routes(app, db)

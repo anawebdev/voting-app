@@ -5,6 +5,7 @@ const mongo         = require('mongodb')
 const MongoClient   = require('mongodb').MongoClient
 const mongoose      = require('mongoose')
 const UserInfo      = require('./models/users.js')
+const PollInfo      = require('./models/polls.js')
 
 module.exports = function (app, db) {
 
@@ -52,28 +53,19 @@ module.exports = function (app, db) {
 
   app.route('/profile')
     .get(ensureAuthenticated,(req,res, next)=>{
-      let displayPolls=[];
-      console.log('user: '+ req.user)
-      if(req.user.polls.length===0) {
-        res.render(process.cwd()+'/views/pug/profile.pug', {message:'Welcome, ' + req.user.name + '! Would you like to create a poll?'})
-      } else {
-        //display polls
-        UserInfo.find({"_id": req.session.passport.user},(err,user)=>{
-          console.log('USER');
-          console.log(req.user.polls);
-          
-          req.user.polls.map((elem, index)=>{
-            let title = "title" + index;
-            let id = "id"+index;
-            displayPolls.push({title: elem.title, id: elem._id})
-            
-          })
-          console.log('POLLS');
-          console.log(displayPolls);
-          res.render(process.cwd()+'/views/pug/profile.pug', {message:'Welcome back, ' + req.user.name + '!', displayPolls:displayPolls})
+
+      PollInfo.find({"creator_id": req.session.passport.user},(err, user)=>{
+
+        let displayPolls=[];   
+        user.map((user,index)=>{
+          displayPolls.unshift({"title": user.title, "poll_id": user._id});
         })
-        
-      }
+        let display = (user===null) ? false : true;
+        res.render(process.cwd()+'/views/pug/profile.pug', {"message":'Welcome back, ' + req.user.name + '!', 
+                                                            "displayPolls": displayPolls, 
+                                                            "display": display
+                                                          })
+      })
   })
 
   app.route('/home')
@@ -84,47 +76,41 @@ module.exports = function (app, db) {
   //create poll
   app.route('/createpoll')
     .post((req,res,next)=>{
-      const formObj = req.body;
       let date = new Date();
       let timestamp = date.getTime();
-      UserInfo.findOne({"_id":req.session.passport.user},(err,user)=>{
-        const createOptions = [];
+      const createOptions = [];
 
-        // create options array
-        Object.keys(req.body).map((key,index)=>{
-          createOptions.unshift({'option' : req.body[key], 'votes': 0})
-        })
-
-        // create poll object
-        user.polls.unshift({
-          "timestamp": timestamp,
-          "creator": req.session.passport.user,
-          "title": req.body.title,
-          "options": createOptions
-        })
-
-        // save poll to db
-        user.save((err,user)=>{
-          if (err) throw err
-          res.redirect('/profile');
-        })
-
-        
+      // create options array
+      Object.keys(req.body).map((key,index)=>{
+        createOptions.unshift({'option' : req.body[key], 'votes': 0})
       })
-      
-    })
-/*
-  //display poll
-  app.route('/poll/:pollId')
-    .get((req,res)=>{
-      console.log(req.params.pollId);
-      var doc = users.polls.id(req.params.pollId);
-      UserInfo.findOne(doc,(err,user)=>{
+
+      // create new poll object     
+      let newPoll = new PollInfo({
+        "creator_id": req.session.passport.user,
+        "title": req.body.title,
+        "timestamp" : timestamp,
+        "options": createOptions        
+      })
+
+      newPoll.save((err,user)=>{
         if(err) throw err;
+      });
+
+    })
+
+  app.route('/poll/:pollId')
+  //chained routes here
+    .get((req,res)=>{
+      console.log(req.params.pollId)
+      PollInfo.findOne({"_id": req.params.pollId}, (err, user)=>{
+        if (err) throw err;
         console.log(user);
+        //res.send("Sending data...");
+        res.render(process.cwd()+'/views/pug/poll.pug');
       })
     })
-*/
+
    
   app.route('/logout')
     .get((req,res)=>{

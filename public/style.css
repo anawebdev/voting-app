@@ -7698,3 +7698,8 @@ input[type="checkbox"]:disabled:checked:after,
 .carousel-caption h6 {
   color: inherit;
 }
+
+canvas {
+  max-width: 40%;
+  max-height: 40%;
+}

@@ -23,9 +23,13 @@ module.exports = function (app, db) {
   passport.use(new LocalStrategy(
     (username, password, done)=>{
       UserInfo.findOne({username:username}, (err,user)=>{
+        console.log(username);
         console.log('User '+ username +' attempted to log in.');
         if (err) { return done(err); }
-        if (!user) { return done(null, false);}
+        if (!user) {console.log("user doesn't exist");
+                    //error page or message here!!!
+                    return done(null, false);
+                  }
         if (!bcrypt.compareSync(password, user.password)) { return done(null, false); }
         console.log(user)
         return done(null, user);
