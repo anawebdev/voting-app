@@ -100,14 +100,24 @@ module.exports = function (app, db) {
     })
 
   app.route('/poll/:pollId')
-  //chained routes here
     .get((req,res)=>{
       console.log(req.params.pollId)
       PollInfo.findOne({"_id": req.params.pollId}, (err, user)=>{
         if (err) throw err;
         console.log(user);
-        //res.send("Sending data...");
-        res.render(process.cwd()+'/views/pug/poll.pug');
+        let pollOptions = [];
+        let pollVotes = [];
+        user.options.map((option, index)=>{
+          return pollOptions.push(option.option);
+        })
+        user.options.map((option, index)=>{
+          return pollVotes.push(option.votes);
+        })
+
+        let pollDetails = JSON.stringify({"pollTitle": user.title,
+                                          "pollOptions": pollOptions,
+                                          "pollVotes": pollVotes})    
+        res.render(process.cwd()+'/views/pug/poll.pug', {"pollDetails": pollDetails});
       })
     })
 

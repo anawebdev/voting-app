@@ -23,7 +23,7 @@ html
   body
 
     h4 #{message}
-    canvas(id="myChart" width="200" height="200")
+    canvas(id="myChart" width="200" height="200" data-poll={pollDetails})
     script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js" integrity="sha256-N4u5BjTLNwmGul6RgLoESPNqDFVUibVuOYhP4gJgrew=" crossorigin="anonymous")
     script(src='https://code.jquery.com/jquery-2.2.1.min.js', integrity='sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=', crossorigin='anonymous')
     script(src='/public/client.js')
