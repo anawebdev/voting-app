@@ -71,6 +71,7 @@ module.exports = function (app, db) {
   app.route('/home')
    .get(ensureAuthenticated,(req,res, next)=>{
       res.render(process.cwd()+'/views/pug/index.pug', {authenticated:true})
+      // '/home' throws error if authenticated is false
   })
 
   //create poll
@@ -82,7 +83,9 @@ module.exports = function (app, db) {
 
       // create options array
       Object.keys(req.body).map((key,index)=>{
-        createOptions.unshift({'option' : req.body[key], 'votes': 0})
+        if(index!==0) {
+          createOptions.unshift({'option' : req.body[key], 'votes': 0})
+        } 
       })
 
       // create new poll object     
@@ -114,10 +117,9 @@ module.exports = function (app, db) {
           return pollVotes.push(option.votes);
         })
 
-        let pollDetails = JSON.stringify({"pollTitle": user.title,
-                                          "pollOptions": pollOptions,
+        let pollDetails = JSON.stringify({"pollOptions": pollOptions,
                                           "pollVotes": pollVotes})    
-        res.render(process.cwd()+'/views/pug/poll.pug', {"pollDetails": pollDetails});
+        res.render(process.cwd()+'/views/pug/poll.pug', {"pollTitle": user.title, "pollDetails": pollDetails});
       })
     })
 

@@ -10,12 +10,12 @@ html
     script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js")
   
   header
-    div(class="container-fluid")
+    .container-fluid
       div(class="row header")
-        div(class="col-md-2")
+        .col-md-2
           h4 Voting App
-        div(class="col-md-8")
-        div(class="col-md-2")
+        .col-md-8
+        .col-md-2
           a(href='/logout')
             p Logout
           a(href='/home')
@@ -23,7 +23,11 @@ html
   body
 
     h4 #{message}
+    h4 #{pollTitle}
+    br
     canvas(id="myChart" width="200" height="200" data-poll={pollDetails})
+    br
+    .vote-buttons
     script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js" integrity="sha256-N4u5BjTLNwmGul6RgLoESPNqDFVUibVuOYhP4gJgrew=" crossorigin="anonymous")
     script(src='https://code.jquery.com/jquery-2.2.1.min.js', integrity='sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=', crossorigin='anonymous')
     script(src='/public/client.js')

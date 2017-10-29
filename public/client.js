@@ -3,6 +3,7 @@ var option = 3;
 var max_fields = 20;
 var wrapper = $(".input_wrap");
 var add_button = $(".add_button");
+
 $(add_button).click(function(e){
   e.preventDefault();
   var add = "<div><label>Option : <input type='text', name='option"+option+"'/></label><button class='remove_fields btn-danger'>X</button></div>";
@@ -24,27 +25,38 @@ $('#submit').on('click', function(){
   
 })
 
-var data = $('canvas').attr("data-poll");
-var data = JSON.parse(data);
-var data = JSON.parse(data.pollDetails);
-console.log(data.pollOptions)
 
-var ctx = document.getElementById("myChart").getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: data.pollOptions,
-        datasets: [{
-            label: '# of Votes',
-            data: data.pollVotes,
-            backgroundColor: [
+var pollData = $('canvas').attr("data-poll");
+pollData = JSON.parse(pollData);
+pollData = JSON.parse(pollData.pollDetails);
+
+pollData.pollOptions.map((option, index)=>{
+    console.log(option)
+    $(".vote-buttons").append('<button class="add-vote btn-primary" value='+ pollData.pollVotes[index] +'>'+ option +'</button>');
+})
+
+$('.add-vote').on('click', ()=>{
+    $(this).val(parseInt($(this).val())+1);
+    $('.vote-buttons').hide('ease-out', ()=>{
+        //location.reload();
+
+    
+    });
+    
+})
+
+var voteData = {
+    labels: pollData.pollOptions,
+    datasets: [
+        {data: pollData.pollVotes,
+        backgroundColor: [
                    
-                'rgba(225,101,82,0.2)',
-                'rgba(201,74,83,0.2)',   
-                'rgba(190,81,104,0.2)',    
-                'rgba(163,73,116,0.2)',
-                'rgba(153,55,103,0.2)',    
-                'rgba(101,56,125,0.2)',    
+                'rgba(38,198,218 ,0.2)',
+                'rgba(236,64,122 ,0.2)',   
+                'rgba(255,179,0 ,0.2)',    
+                'rgba(27,94,32 ,0.2)',
+                'rgba(94,53,177 ,0.2)',    
+                'rgba(0,121,107 ,0.2)',    
                 'rgba(78,36,114,0.2)',
                 'rgba(145,99,182,0.2)',    
                 'rgba(226,121,163,0.2)',    
@@ -63,12 +75,12 @@ var myChart = new Chart(ctx, {
 
             ],
             borderColor: [
-                'rgba(225,101,82, 1)',
-                'rgba(201,74,83, 1)',   
-                'rgba(190,81,104, 1)',    
-                'rgba(163,73,116, 1)',
-                'rgba(153,55,103, 1)',    
-                'rgba(101,56,125, 1)',    
+                'rgba(38,198,218 ,1)',
+                'rgba(236,64,122 ,1)',   
+                'rgba(255,179,0 ,1)',    
+                'rgba(27,94,32 ,1)',
+                'rgba(94,53,177 ,1)',    
+                'rgba(0,121,107 ,1)',    
                 'rgba(78,36,114, 1)',
                 'rgba(145,99,182, 1)',    
                 'rgba(226,121,163, 1)',    
@@ -87,16 +99,12 @@ var myChart = new Chart(ctx, {
             ],
             borderWidth: 1
         }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
-    }
+}
+
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: voteData
 });
 
 });// document ready
